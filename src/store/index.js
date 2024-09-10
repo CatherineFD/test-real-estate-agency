@@ -1,40 +1,86 @@
 import { createStore } from 'vuex';
-import {getItem, setItem} from "@/store/localStorage";
 import api from '@/api';
+
+const errorMessage= 'ошибка на сервере';
 
 export default createStore({
   state: {
-    users: getItem('users') || []
-
+    users: [],
+    user: {},
+    error: {
+      isError: false,
+      message: ''
+    },
+    isError: false,
+    isLoading: false
   },
   getters: {
     getUsers(state) {
       return state.users;
+    },
+    getUser(state) {
+      return state.user;
+    },
+    getIsError(state) {
+      return state.error;
+    },
+    getIsLoading(state) {
+      return state.isLoading;
     }
   },
   mutations: {
     setUsers(state, users) {
+      if (users.length === 0) {
+        state.error.isError = true
+        state.error.message = 'пользователь не найден'
+        return
+      }
+
       state.users = users;
-      setItem('users', users)
+    },
+    setUser(state, user) {
+      state.user = user;
     },
     clearUsers(state) {
-      localStorage.clear();
+      state.users = [];
+    },
+    clearUser(state) {
+      state.user = {};
+    },
+    setIsError(state, error) {
+      state.error.message = error.message
+      state.error.isError = error.isError
+    },
+    setIsLoading(state, isLoading) {
+      state.isLoading = isLoading
     }
   },
   actions: {
     getUsersByUsername({commit}, search) {
-      let users = [];
-      let searchItem = search.split(', ');
-      if (searchItem.length > 1) {
-        api.getUsersByUserNames(searchItem)
-            .then(res => {
-              commit('setUsers', res.data)});
-      } else {
-        api.getUserByUserName(searchItem[0]).then(res => {
-          commit('setUsers', res.data)});
-      }
+      commit('setIsLoading', true);
 
-      commit('setUsers', users);
+      api.getUsersByUserNames(search)
+          .then(res => {commit('setUsers', res.data)})
+          .catch(e => {commit('setIsError', {isError: true, message: errorMessage})})
+          .finally(() => {commit('setIsLoading', false)});
+
+    },
+    getUsersById({commit}, search) {
+      commit('setIsLoading', true);
+
+      api.getUsersById(search)
+          .then(res => {commit('setUsers', res.data)})
+          .catch(e => {commit('setIsError', {isError: true, message: errorMessage})})
+          .finally(() => {commit('setIsLoading', false)});
+
+    },
+    deleteAllUsers({commit}) {
+      commit('clearUsers');
+      commit('clearUser');
+      commit('setIsError', false, '');
+    },
+    setUser({commit}, user) {
+      commit('setUser', user)
     }
   },
   modules: {

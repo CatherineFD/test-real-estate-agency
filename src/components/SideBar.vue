@@ -11,7 +11,7 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div class="sidebar">
     <SearchInput></SearchInput>
     <ResultsSearch></ResultsSearch>
   </div>
@@ -19,5 +19,8 @@ export default {
 </template>
 
 <style scoped lang="scss">
-
+.sidebar {
+  width: 30%;
+  margin: 27px 20px 27px 30px;
+}
 </style>

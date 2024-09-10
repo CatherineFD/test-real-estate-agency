@@ -8,11 +8,12 @@ const axiosApi = axios.create({
 });
 
 export default {
-    getUserByUserName(username) {
-        return axiosApi.get('users?username='+username);
-    },
     getUsersByUserNames(usernames) {
         const query = usernames.map(username => `username=${encodeURIComponent(username)}`).join('&');
+        return axiosApi.get(`users?${query}`);
+    },
+    getUsersById(usernames) {
+        const query = usernames.map(username => `id=${encodeURIComponent(username)}`).join('&');
         return axiosApi.get(`users?${query}`);
     }
 }

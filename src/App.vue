@@ -1,11 +1,17 @@
 <template>
-<!--  <nav>-->
-<!--    <router-link to="/">Home</router-link> |-->
-<!--    <router-link to="/about">About</router-link>-->
-<!--  </nav>-->
+  <Header></Header>
   <router-view/>
-
 </template>
+
+<script>
+import Header from "@/components/UI/Header.vue";
+export default {
+  name: "App",
+  components: {
+    Header
+  }
+}
+</script>
 
 <style lang="scss">
 #app {
@@ -14,6 +20,9 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 nav {
