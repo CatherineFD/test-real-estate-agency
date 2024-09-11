@@ -1,5 +1,5 @@
 <script>
-import {mapActions, mapGetters} from "vuex";
+import {mapActions} from "vuex";
 
 export default {
   name: "SearchInput",
@@ -16,7 +16,6 @@ export default {
       clearTimeout(this.timeout);
       this.timeout = setTimeout(() => {
         if (this.search.length > 0) {
-          console.log(this.search.length)
           this.$emit('search', this.search)
         } else {
           this.deleteAllUsers();
@@ -24,8 +23,6 @@ export default {
       }, 500);
     },
   },
-  watch: {
-  }
 }
 </script>
 

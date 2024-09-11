@@ -37,19 +37,19 @@ export default {
 
   @media(max-width: 1200px) {
     .container {
-      max-width: 960px;
+      max-width: 990px;
     }
   }
 
   @media (max-width: 992px) {
     .container {
-      max-width: 720px;
+      max-width: 760px;
     }
   }
 
   @media (max-width:  768px) {
     .container {
-      max-width: 540px;
+      max-width: 550px;
     }
   }
 

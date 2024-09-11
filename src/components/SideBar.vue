@@ -24,7 +24,7 @@ export default {
       }
 
       const items = this.searchParam.split(',').map(item => item.trim());
-      const allAreNumbers = items.every(item => !isNaN(item));
+      const allAreNumbers = items.every(item => !isNaN(Number(item)));
 
       if (allAreNumbers) {
         const ids = items.map(Number);
@@ -42,8 +42,10 @@ export default {
 
 <template>
   <div class="sidebar">
-    <SearchInput @search="onSearch"></SearchInput>
-    <ResultsSearch></ResultsSearch>
+    <div>
+      <SearchInput @search="onSearch"></SearchInput>
+      <ResultsSearch></ResultsSearch>
+    </div>
     <Pagination @changePage="onSearch"></Pagination>
   </div>
 
@@ -55,6 +57,9 @@ export default {
   padding: 27px 20px 27px 30px;
   height: 80vh;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   &::-webkit-scrollbar {
     width: 5px;

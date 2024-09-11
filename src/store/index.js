@@ -1,21 +1,21 @@
 import { createStore } from 'vuex';
 import api from '@/api';
 
-const errorMessage= 'ошибка на сервере';
+const errorMessage= 'ошибка сервера';
 
 export default createStore({
   state: {
     users: [],
     user: {},
+
     error: {
       isError: false,
       message: ''
     },
-    isError: false,
     isLoading: false,
     infoPage: {
       page: 1,
-      limit: 10,
+      limit: 5,
       totalPages: 0
     }
   },
@@ -79,7 +79,7 @@ export default createStore({
             let totalPages = Math.ceil(res.headers['x-total-count'] / limit);
             commit('setTotalPages', totalPages);
           })
-          .catch(e => {commit('setIsError', {isError: true, message: errorMessage})})
+          .catch(() => {commit('setIsError', {isError: true, message: errorMessage})})
           .finally(() => {commit('setIsLoading', false)});
 
     },
@@ -92,7 +92,7 @@ export default createStore({
             let totalPages = Math.ceil(res.headers['x-total-count'] / limit);
             commit('setTotalPages', totalPages);
           })
-          .catch(e => {commit('setIsError', {isError: true, message: errorMessage})})
+          .catch(() => {commit('setIsError', {isError: true, message: errorMessage})})
           .finally(() => {commit('setIsLoading', false)});
 
     },

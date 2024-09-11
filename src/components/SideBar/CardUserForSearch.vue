@@ -4,7 +4,11 @@ export default {
   props: {
     user: {
       type: Object,
-      required: true
+      default: () => ({
+        username: '',
+        email: '',
+        id: 0
+      })
     }
   }
 }
@@ -49,6 +53,33 @@ export default {
     color: #333333;
     margin-bottom: 5px;
   }
+
+  &__email {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17.07px;
+    color: rgba(118, 120, 125, 1);
+  }
+
+}
+
+@media(max-width: 1200px) {
+  .card__email {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 992px) {
+  .card__email {
+    font-size: 10px;
+  }
+}
+
+@media (max-width:  768px) {
+
+}
+
+@media (max-width:  556px) {
 
 }
 

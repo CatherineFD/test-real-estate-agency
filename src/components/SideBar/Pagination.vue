@@ -45,5 +45,23 @@ export default {
 </template>
 
 <style scoped lang="scss">
+.pagination {
+  width: 100%;
 
+  & button {
+    background-color: #fff;
+    border: 1px solid rgba(222, 222, 221, 1);
+    border-radius: 3px;
+    padding: 5px 10px;
+    margin-right: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: border-color 0.3s ease-in;
+
+    &.active,
+    &:hover {
+      border-color: rgb(227, 31, 36);
+    }
+  }
+}
 </style>
