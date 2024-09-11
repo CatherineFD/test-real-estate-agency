@@ -9,33 +9,22 @@ export default {
       timeout: null,
     }
   },
-  computed: {
-    ...mapGetters({getUsers: 'getUsers'}),
-  },
   methods: {
-    ...mapActions(['getUsersByUsername', 'deleteAllUsers', 'getUsersById']),
+    ...mapActions([ 'deleteAllUsers']),
 
-    onSearch() {
-      const items = this.search.split(',').map(item => item.trim());
-      const allAreNumbers = items.every(item => !isNaN(item));
-      if (allAreNumbers) {
-
-        const ids = items.map(Number);
-        this.getUsersById(ids);
-      } else {
-        this.getUsersByUsername(items);
-      }
-    },
     debouncedSearch() {
       clearTimeout(this.timeout);
       this.timeout = setTimeout(() => {
         if (this.search.length > 0) {
-          this.onSearch();
+          console.log(this.search.length)
+          this.$emit('search', this.search)
         } else {
           this.deleteAllUsers();
         }
       }, 500);
     },
+  },
+  watch: {
   }
 }
 </script>

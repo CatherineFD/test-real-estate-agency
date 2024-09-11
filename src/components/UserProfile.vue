@@ -35,6 +35,10 @@ export default {
 
 <style scoped lang="scss">
   .user-profile {
+    flex-grow: 1;
+    position: sticky;
+    top: 0;
+    height: 80vh;
     width: 70%;
     border-left: 1px solid rgba(222, 222, 221, 1);
     border-radius: 0 10px 10px 0;

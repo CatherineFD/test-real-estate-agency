@@ -7,7 +7,15 @@ export default {
   name: "ResultsSearch",
   components: {
     Loader,
-    CardUser
+    CardUser,
+  },
+  data() {
+    return {
+      pagination: {
+        upperBound: 0,
+        lowerBound: 20
+      }
+    }
   },
   computed: {
     ...mapGetters({getUsers: 'getUsers', error: 'getIsError', isLoading: 'getIsLoading'}),

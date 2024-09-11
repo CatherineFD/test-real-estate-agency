@@ -12,7 +12,12 @@ export default createStore({
       message: ''
     },
     isError: false,
-    isLoading: false
+    isLoading: false,
+    infoPage: {
+      page: 1,
+      limit: 10,
+      totalPages: 0
+    }
   },
   getters: {
     getUsers(state) {
@@ -26,6 +31,9 @@ export default createStore({
     },
     getIsLoading(state) {
       return state.isLoading;
+    },
+    getInfoPage(state) {
+      return state.infoPage;
     }
   },
   mutations: {
@@ -48,28 +56,42 @@ export default createStore({
       state.user = {};
     },
     setIsError(state, error) {
-      state.error.message = error.message
-      state.error.isError = error.isError
+      state.error.message = error.message;
+      state.error.isError = error.isError;
     },
     setIsLoading(state, isLoading) {
-      state.isLoading = isLoading
+      state.isLoading = isLoading;
+    },
+    setTotalPages(state, totalPages) {
+      state.infoPage.totalPages = totalPages;
+    },
+    setPage(state, page) {
+      state.infoPage.page = page;
     }
   },
   actions: {
-    getUsersByUsername({commit}, search) {
+    getUsersByUsername({commit}, {search, limit, page}) {
       commit('setIsLoading', true);
 
-      api.getUsersByUserNames(search)
-          .then(res => {commit('setUsers', res.data)})
+      api.getUsersByUserNames(search, limit, page)
+          .then(res => {
+            commit('setUsers', res.data)
+            let totalPages = Math.ceil(res.headers['x-total-count'] / limit);
+            commit('setTotalPages', totalPages);
+          })
           .catch(e => {commit('setIsError', {isError: true, message: errorMessage})})
           .finally(() => {commit('setIsLoading', false)});
 
     },
-    getUsersById({commit}, search) {
+    getUsersById({commit}, {search, limit, page}) {
       commit('setIsLoading', true);
 
-      api.getUsersById(search)
-          .then(res => {commit('setUsers', res.data)})
+      api.getUsersById(search, limit, page)
+          .then(res => {
+            commit('setUsers', res.data);
+            let totalPages = Math.ceil(res.headers['x-total-count'] / limit);
+            commit('setTotalPages', totalPages);
+          })
           .catch(e => {commit('setIsError', {isError: true, message: errorMessage})})
           .finally(() => {commit('setIsLoading', false)});
 
@@ -81,6 +103,9 @@ export default createStore({
     },
     setUser({commit}, user) {
       commit('setUser', user)
+    },
+    changePage({commit}, page) {
+      commit('setPage', page);
     }
   },
   modules: {

@@ -8,12 +8,14 @@ const axiosApi = axios.create({
 });
 
 export default {
-    getUsersByUserNames(usernames) {
-        const query = usernames.map(username => `username=${encodeURIComponent(username)}`).join('&');
+    getUsersByUserNames(usernames, limit, page) {
+        const queryUsers = usernames.map(username => `username=${encodeURIComponent(username)}`).join('&');
+        const query = `${queryUsers}&_limit=${limit}&_page=${page}`;
         return axiosApi.get(`users?${query}`);
     },
-    getUsersById(usernames) {
-        const query = usernames.map(username => `id=${encodeURIComponent(username)}`).join('&');
+    getUsersById(usernames, limit, page) {
+        const queryUsers = usernames.map(username => `id=${encodeURIComponent(username)}`).join('&');
+        const query = `${queryUsers}&_limit=${limit}&_page=${page}`;
         return axiosApi.get(`users?${query}`);
     }
 }
